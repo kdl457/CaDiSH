@@ -17,14 +17,20 @@ tmp <- data.frame("Recovery_Rate" = c(colSums(res_full)/50, colSums(res_sin_1)/5
                            apply(res_sin_2, 2, sd), apply(res_sin_3, 2, sd)),
                   "Exp" = c(rep("50_obs_full", 11), rep("50_obs_1", 11), rep("50_obs_2", 11), rep("50_obs_3", 11)))
 
-ggplot(data = tmp, aes(x = H_Y_val, y = Recovery_Rate, fill = Exp, color = Exp)) + 
-  geom_point(size = 3)  + 
-  ggtitle("Coefficient recovery with H sinus wave") + 
-  xlab("Coefficient of HX2 in assignment for Y") + 
-  ylab("Recovery Rate") + 
+g <- ggplot(data = tmp, aes(x = tmp$H_Y_val, y = Recovery_Rate, color = Exp)) + 
+  geom_errorbar(aes(ymin = Recovery_Rate - SD, ymax=Recovery_Rate + SD), width=.5, position = "dodge") + 
+  geom_point(size = 2, position = position_dodge(width = 0.5))  + 
+  xlab(expression(paste("Influence of H", ", " ,c[YH2]))) + 
+  ylab("Prob. of CaDiSH beating tvlm") + 
   theme_minimal() + 
-  theme(plot.title = element_text(hjust = 0.5, size = 22), axis.title = element_text(size = 14)) +
-  geom_errorbar(aes(ymin = Recovery_Rate - SD, ymax = Recovery_Rate + SD), width=.2)
+  theme(axis.title = element_text(size = 12), 
+        legend.background = element_rect(linetype = 1, size = 0.5, colour = 1)) + 
+  scale_color_discrete(labels = c(expression(paste("X"^1)),expression(paste("X"^2)),
+                                  expression(paste("X"^3)), expression(paste("Average"))), 
+                       guide = guide_legend(title.position = "top", title.hjust = 0.5)) 
+g$labels$colour <- "Predictor"
+
+ggsave(filename = "Graphics/coeff_recov_sin.pdf", plot = g, width = 5.8, height = 3)
 
 # H(t) = log(t + 0.1)
 
@@ -40,11 +46,17 @@ tmp_log <- data.frame("Recovery_Rate" = c(colSums(res_full_log)/50, colSums(res_
                            apply(res_log_2, 2, sd), apply(res_log_3, 2, sd)),
                   "Exp" = c(rep("50_obs_full_log", 11), rep("50_obs_1", 11), rep("50_obs_2", 11), rep("50_obs_3", 11)))
 
-ggplot(data = tmp_log, aes(x = H_Y_val, y = Recovery_Rate, fill = Exp, color = Exp)) + 
-  geom_point(size = 3)  + 
-  ggtitle("Coefficient recovery with H log(t + 0.1)") + 
-  xlab("Coefficient of HX2 in assignment for Y") + 
-  ylab("Recovery Rate") + 
+g <- ggplot(data = tmp_log, aes(x = tmp_log$H_Y_val, y = Recovery_Rate, color = Exp)) + 
+  geom_errorbar(aes(ymin = Recovery_Rate - SD, ymax=Recovery_Rate + SD), width=.5, position = "dodge") + 
+  geom_point(size = 2, position = position_dodge(width = 0.5))  + 
+  xlab(expression(paste("Influence of H", ", " ,c[YH2]))) + 
+  ylab("Prob. of CaDiSH beating tvlm") + 
   theme_minimal() + 
-  theme(plot.title = element_text(hjust = 0.5, size = 22), axis.title = element_text(size = 14)) +
-  geom_errorbar(aes(ymin = Recovery_Rate - SD, ymax = Recovery_Rate + SD), width=.2)
+  theme(axis.title = element_text(size = 12), 
+        legend.background = element_rect(linetype = 1, size = 0.5, colour = 1)) + 
+  scale_color_discrete(labels = c(expression(paste("X"^1)),expression(paste("X"^2)),
+                                  expression(paste("X"^3)), expression(paste("Average"))), 
+                       guide = guide_legend(title.position = "top", title.hjust = 0.5)) 
+g$labels$colour <- "Predictor"
+
+ggsave(filename = "Graphics/coeff_recov_log.pdf", plot = g, width = 5.8, height = 3)
