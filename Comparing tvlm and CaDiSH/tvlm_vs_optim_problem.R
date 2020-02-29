@@ -60,44 +60,70 @@ plot_data_frame <- data.frame("t" = data$t, "X1_tvlm_estimate" =  tv_model_1$tvc
 sum((plot_data_frame$X1_tvlm_estimate - plot_data_frame$X1_true_coefficient)^2) # 277.87
 sum((plot_data_frame$X1_obj_estimate - plot_data_frame$X1_true_coefficient)^2) # 13.79
 
+temp_hat_1 <- paste("SSR(hat(beta^{1})(t)) ==", 278)
+temp_tilde_1 <- paste("SSR(tilde(beta^{1})(t)) ==", 13.8)
+
 plot_data_frame_1 <- melt(plot_data_frame[,c(1,2,5,8)], id = "t", variable.name = "Method")
 p_1 <- ggplot(data = plot_data_frame_1, aes(x = t, y = value, color = Method)) + geom_line() + 
-  ggtitle("Comparison of tvlm and our CaDiSH method on X1") + xlab("Time") + 
-  ylab("Regression coefficient for X1") + labs(fill = "Estimates") + 
+  labs(y = expression(paste("Estimates of", " ",  beta^{1}, (t))), x = "Time",  fill = "Estimates") + 
   scale_fill_discrete(labels = c("tvlm estimate", "Objective estimate", "True coefficient")) + 
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, size = 30), axis.title = element_text(size = 22), 
-        legend.text = element_text(size = 14), legend.title = element_text(size = 14)) +
-  annotate("text", x = 0.9, y = 0.85, label = "SSR score for tvlm = 277.9", cex = 4.5) + 
-  annotate("text", x = 0.9, y = 0.75, label = "SSR score for our method = 13.8", cex = 4.5)
+  theme(axis.title = element_text(size = 12), 
+        legend.background = element_rect(linetype = 1, size = 0.5, colour = 1)) + 
+  annotate("text", x = 0.9, y = 0.85, label = temp_hat_1, cex = 3, parse = TRUE) + 
+  annotate("text", x = 0.9, y = 0.60, label = temp_tilde_1, cex = 3, parse = TRUE) + 
+  scale_color_discrete(labels = c(expression(paste(hat(beta^{1}), (t))),
+                                  expression(paste(tilde(beta^{1}), (t))),
+                                  expression(paste(beta^{1}, (t)))), 
+                       guide = guide_legend(title.position = "top", title.hjust = 0.5))
 
-ggsave(filename = "Graphics/tvlm_obj_est_X1.pdf", plot = p_1, width = 7, height = 4, dpi = 72)
+ggsave(filename = "Graphics/tvlm_obj_est_X1.pdf", plot = p_1, width = 5.8, height = 3)
 
 sum((plot_data_frame$X2_tvlm_estimate - plot_data_frame$X2_true_coefficient)^2) # 0.97
 sum((plot_data_frame$X2_obj_estimate - plot_data_frame$X2_true_coefficient)^2) # 0.32
 
+temp_hat_2 <- paste("SSR(hat(beta^{2})(t)) ==", 0.97)
+temp_tilde_2 <- paste("SSR(tilde(beta^{2})(t)) ==", 0.32)
+
 plot_data_frame_2 <- melt(plot_data_frame[,c(1,3,6,9)], id = "t", variable.name = "Method")
-ggplot(data = plot_data_frame_2, aes(x = t, y = value, color = Method)) + geom_line() + 
-  ggtitle("Comparison of tvlm and our CaDiSH method on X2") + xlab("Time") +
-  ylab("Regression coefficient for X2") + 
+
+p_2 <- ggplot(data = plot_data_frame_2, aes(x = t, y = value, color = Method)) + geom_line() + 
+  labs(y = expression(paste("Estimates of", " ",  beta^{2}, (t))), x = "Time",  fill = "Estimates") + 
   scale_fill_discrete(labels = c("tvlm estimate", "Objective estimate", "True coefficient")) + 
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, size = 22), axis.title = element_text(size = 14)) +
-  annotate("text", x = 0.9, y = 0.85, label = "SSR score for tvlm = 0.97") + 
-  annotate("text", x = 0.9, y = 0.75, label = "SSR score for our method = 0.32")
+  theme(axis.title = element_text(size = 12), 
+        legend.background = element_rect(linetype = 1, size = 0.5, colour = 1)) + 
+  annotate("text", x = 0.9, y = 0.85, label = temp_hat_2, cex = 3, parse = TRUE) + 
+  annotate("text", x = 0.9, y = 0.60, label = temp_tilde_2, cex = 3, parse = TRUE) + 
+  scale_color_discrete(labels = c(expression(paste(hat(beta^{2}), (t))),
+                                  expression(paste(tilde(beta^{2}), (t))),
+                                  expression(paste(beta^{2}, (t)))), 
+                       guide = guide_legend(title.position = "top", title.hjust = 0.5))
+
+ggsave(filename = "Graphics/tvlm_obj_est_X2.pdf", plot = p_2, width = 5.8, height = 3)
+
 
 sum((plot_data_frame$X3_tvlm_estimate - plot_data_frame$X3_true_coefficient)^2) # 107.7
 sum((plot_data_frame$X3_obj_estimate - plot_data_frame$X3_true_coefficient)^2) # 99.7
 
+temp_hat_3 <- paste("SSR(hat(beta^{3})(t)) ==", 108)
+temp_tilde_3 <- paste("SSR(tilde(beta^{3})(t)) ==", 100)
+
 plot_data_frame_3 <- melt(plot_data_frame[,c(1,4,7,10)], id = "t", variable.name = "Method")
-ggplot(data = plot_data_frame_3, aes(x = t, y = value, color = Method)) + geom_line() + 
-  ggtitle("Comparison of tvlm and our CaDiSH method on X3") + xlab("time") + 
-  ylab("Regression coefficient for X1") + 
+p_3 <- ggplot(data = plot_data_frame_3, aes(x = t, y = value, color = Method)) + geom_line() + 
+  labs(y = expression(paste("Estimates of", " ",  beta^{3}, (t))), x = "Time",  fill = "Estimates") + 
   scale_fill_discrete(labels = c("tvlm estimate", "Objective estimate", "True coefficient")) + 
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, size = 22), axis.title = element_text(size = 14)) +
-  annotate("text", x = 0.9, y = 0.85, label = "SSR score for tvlm = 107.7") + 
-  annotate("text", x = 0.9, y = 0.70, label = "SSR score for our method = 99.7")
+  theme(axis.title = element_text(size = 12), 
+        legend.background = element_rect(linetype = 1, size = 0.5, colour = 1)) + 
+  annotate("text", x = 0.9, y = 0.85, label = temp_hat_3, cex = 3, parse = TRUE) + 
+  annotate("text", x = 0.9, y = 0.40, label = temp_tilde_3, cex = 3, parse = TRUE) + 
+  scale_color_discrete(labels = c(expression(paste(hat(beta^{3}), (t))),
+                                  expression(paste(tilde(beta^{3}), (t))),
+                                  expression(paste(beta^{3}, (t)))), 
+                       guide = guide_legend(title.position = "top", title.hjust = 0.5))
+
+ggsave(filename = "Graphics/tvlm_obj_est_X3.pdf", plot = p_3, width = 5.8, height = 3)
 
 ######### For X1:
 #### Showing how SSR of estimates and true coefficients changes with choice of bandwidth
@@ -123,15 +149,25 @@ for (i in 1:length(lambda)) {
   SSR_lambda[i] <- sum((res - plot_data_frame$X1_true_coefficient)^2)
 }
 
-par(mfrow = c(1, 2))
-plot(h, SSR_h, pch = 19, col = "red", xlab = "bandwidth h", ylab = "SSR value of tvlm estimate", 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h), col = "red", lwd = 3)
-plot(lambda, SSR_lambda, pch = 19, col = "blue", xlab = "lambda", 
-     ylab = "SSR value of objective function estimate", 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h), col = "red", lwd = 3)
-mtext("Comparing tvlm to our novel method using X1 as predictor", side = 3, line = -2, outer = TRUE, cex = 2)
+SSR_data_1 <- data.frame("SSR_lambda" = SSR_lambda, "SSR_h" = SSR_h, "Lambda" = lambda, "h" = h)
+library(ggplot2)
+library(gridExtra)
+
+p_SSR_h_1 <- ggplot(data = SSR_data_1, aes(x = h, y = SSR_h)) + geom_point(color = "red", size = 0.5) + 
+  labs(y = expression(paste("SSR"[h])), x = "Bandwidth h") + ylim(c(10,40)) + 
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h), color = "black", size = 0.7, linetype = "dashed")
+
+p_SSR_lambda_1 <- ggplot(data = SSR_data_1, aes(x = lambda, y = SSR_lambda)) + geom_point(color = "blue", size = 0.5) + 
+  labs(y = expression(paste("SSR"[lambda])), x = expression(paste("Roughness penalty", " ", lambda))) + 
+  theme_minimal() + ylim(c(10,40)) + 
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h), color = "black", size = 0.7, linetype = "dashed")
+
+g_1 <- grid.arrange(p_SSR_h_1, p_SSR_lambda_1, nrow = 1)
+
+ggsave(filename = "Graphics/SSR_h_lambda_X1.pdf", plot = g_1, width = 5.8, height = 3)
 
 
 #### For X2:
@@ -151,16 +187,23 @@ for (i in 1:length(lambda)) {
   SSR_lambda_2[i] <- sum((res - plot_data_frame$X2_true_coefficient)^2)
 }
 
-par(mfrow = c(1, 2))
-plot(h, SSR_h_2, pch = 19, col = "red", xlab = "bandwidth h", ylab = "SSR value of tvlm estimate", 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h_2), col = "red", lwd = 3)
-plot(lambda, SSR_lambda_2, pch = 19, col = "blue", xlab = "lambda", 
-     ylab = "SSR value of objective function estimate", ylim = c(0, min(SSR_h_2) + 0.05), 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h_2), col = "red", lwd = 3)
-mtext("Comparing tvlm to our novel method using X2 as predictor", side = 3, line = -2, outer = TRUE, cex = 2)
+SSR_data_2 <- data.frame("SSR_lambda" = SSR_lambda_2, "SSR_h" = SSR_h_2, "Lambda" = lambda, "h" = h)
 
+p_SSR_h_2 <- ggplot(data = SSR_data_2, aes(x = h, y = SSR_h)) + geom_point(color = "red", size = 0.5) + 
+  labs(y = expression(paste("SSR"[h])), x = "Bandwidth h") + ylim(c(0.3,1.5)) + 
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h_2), color = "black", size = 0.7, linetype = "dashed")
+
+p_SSR_lambda_2 <- ggplot(data = SSR_data_2, aes(x = lambda, y = SSR_lambda)) + geom_point(color = "blue", size = 0.5) + 
+  labs(y = expression(paste("SSR"[lambda])), x = expression(paste("Roughness penalty", " ", lambda))) + 
+  theme_minimal() + ylim(c(0.3,1.5)) + 
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h_2), color = "black", size = 0.7, linetype = "dashed")
+
+g_2 <- grid.arrange(p_SSR_h_2, p_SSR_lambda_2, nrow = 1)
+
+ggsave(filename = "Graphics/SSR_h_lambda_X2.pdf", plot = g_2, width = 5.8, height = 3)
 #### For X3:
 
 SSR_h_3 <- c()
@@ -178,14 +221,20 @@ for (i in 1:length(lambda)) {
   SSR_lambda_3[i] <- sum((res - plot_data_frame$X3_true_coefficient)^2)
 }
 
-par(mfrow = c(1, 2))
-plot(h, SSR_h_3, pch = 19, col = "red", xlab = "bandwidth h", ylab = "SSR value of tvlm estimate", 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h_3), col = "red", lwd = 3)
-plot(lambda, SSR_lambda_3, ylim = c(97.7, 107), pch = 19, col = "blue", xlab = "lambda", 
-     ylab = "SSR value of objective function estimate", 
-     cex.lab=1.5, cex.axis=1.4, cex.main=1.5, cex.sub=1.5)
-abline(h = min(SSR_h_3), col = "red", lwd = 3)
-mtext("Comparing tvlm to our novel method using X3 as predictor", side = 3, line = -2, outer = TRUE, cex = 2)
+SSR_data_3 <- data.frame("SSR_lambda" = SSR_lambda_3, "SSR_h" = SSR_h_3, "Lambda" = lambda, "h" = h)
 
+p_SSR_h_3 <- ggplot(data = SSR_data_3, aes(x = h, y = SSR_h)) + geom_point(color = "red", size = 0.5) + 
+  labs(y = expression(paste("SSR"[h])), x = "Bandwidth h") + ylim(c(95,130)) + 
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h_3), color = "black", size = 0.7, linetype = "dashed")
 
+p_SSR_lambda_3 <- ggplot(data = SSR_data_3, aes(x = lambda, y = SSR_lambda)) + geom_point(color = "blue", size = 0.5) + 
+  labs(y = expression(paste("SSR"[lambda])), x = expression(paste("Roughness penalty", " ", lambda))) + 
+  theme_minimal() + ylim(c(95,130)) + 
+  theme(axis.title = element_text(size = 12)) + 
+  geom_hline(yintercept =  min(SSR_h_3), color = "black", size = 0.7, linetype = "dashed")
+
+g_3 <- grid.arrange(p_SSR_h_3, p_SSR_lambda_3, nrow = 1)
+
+ggsave(filename = "Graphics/SSR_h_lambda_X3.pdf", plot = g_3, width = 5.8, height = 3)
